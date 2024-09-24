@@ -1,35 +1,72 @@
 "use client";
 
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
-import { Floor, OmokBoard } from "./components";
-import { FC } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import { Floor, OmokBoard, GodicCabinetModel } from "./components";
+import { useState } from "react";
 
-interface ModelProps {
-  url: string; // gltf 파일의 경로를 받을 prop
-}
-
-const MyModel: FC<ModelProps> = ({ url }) => {
-  const { scene } = useGLTF(url); // useGLTF 훅으로 모델을 로드
-  // 모델의 크기를 조절
-  scene.scale.set(13, 14, 8); // 원하는 스케일로 조절
-  scene.position.set(40, -5, -45); // 원하는 위치로 조절
-
-  return <primitive object={scene} castShadow receiveShadow />; // 모델 렌더링
-};
-
+import { PerspectiveCamera } from "three";
 export default function Page() {
+  // 카메라 위치와 시야각을 조정할 수 있도록 상태 관리
+  const initialPosition: [number, number, number] = [0, 45, 30];
+  const [cameraPosition, setCameraPosition] = useState<
+    [number, number, number]
+  >([0, 45, 30]);
+  const [cameraFov, setCameraFov] = useState<number>(50);
+
+  // 카메라 위치와 시야각을 변경하는 함수
+  const changeCameraPosition = () => {
+    console.log("카메라위치변경");
+    setCameraPosition([0, 30, 10]); // 새로운 카메라 위치 설정
+    setCameraFov(40); // 새로운 시야각 설정
+  };
+
+  // 카메라를 초기 상태로 복귀하는 함수
+  const resetCameraPosition = () => {
+    console.log("카메라 초기화");
+    setCameraPosition(initialPosition); // 초기 카메라 위치로 복귀
+    setCameraFov(50); // 초기 시야각으로 복귀
+  };
+
+  const CameraController = () => {
+    const { camera } = useThree();
+
+    useFrame(() => {
+      const perspectiveCamera = camera as PerspectiveCamera; // PerspectiveCamera로 타입 캐스팅
+      perspectiveCamera.position.set(...cameraPosition);
+      perspectiveCamera.fov = cameraFov;
+      perspectiveCamera.updateProjectionMatrix(); // 카메라 상태 업데이트
+    });
+
+    return null;
+  };
+
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
+      {/* 카메라 위치 조정 버튼 */}
+      <button
+        onClick={changeCameraPosition}
+        className="flex bottom-20 right-0 z-40 fixed w-24 bg-amber-400 p-2"
+      >
+        카메라 변경
+      </button>
+      {/* 카메라 초기화 버튼 */}
+      <button
+        onClick={resetCameraPosition}
+        className="flex bottom-0 right-0 z-40 fixed w-24 bg-amber-400 p-2"
+      >
+        카메라 초기화
+      </button>
       <Canvas
         camera={{
-          position: [0, 45, 30], // 카메라의 위치 설정
-          fov: 50, // 카메라의 시야각 설정
+          position: cameraPosition, // 카메라의 위치 설정
+          fov: cameraFov, // 카메라의 시야각 설정
           near: 0.2, // 카메라의 가까운 클리핑 평면 설정
           far: 1000, // 카메라의 먼 클리핑 평면 설정
         }}
         shadows // 그림자 기능 활성화
       >
+        <CameraController />
         {/* 카메라와 조명 설정 */}
         <ambientLight intensity={1} />
         <directionalLight
@@ -58,13 +95,15 @@ export default function Page() {
           <meshBasicMaterial color="red" />
         </mesh> */}
         <OrbitControls
+          enableZoom={true} // 줌 허용
+          enablePan={true} // 팬 허용
           maxPolarAngle={Math.PI / 2} // 카메라가 수직으로 90도까지만 회전하도록 제한
           minPolarAngle={Math.PI / 14} // 카메라가 수직으로 45도까지 회전하도록 제한
           maxAzimuthAngle={Math.PI / 2} // 카메라가 수평으로 90도까지만 회전하도록 제한
           minAzimuthAngle={-Math.PI / 2} // 카메라가 수평으로 -90도까지 회전하도록 제한
         />
         {/* GLTF 모델 렌더링 */}
-        <MyModel url="/images/model/GothicCabinet_01_4k.gltf" />
+        <GodicCabinetModel url="/images/model/gothic-cabinet/GothicCabinet_01_4k.gltf" />
         <OmokBoard />
 
         {/* 바닥 추가 */}

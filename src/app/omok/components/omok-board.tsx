@@ -5,6 +5,7 @@ import { Box } from "@react-three/drei";
 import { MeshStandardMaterial, TextureLoader } from "three";
 import { OmokGridHelper, OmokCushions, OmokStarPoints } from "./index";
 
+/* 메인 오목판 컴포넌트 */
 export const OmokBoard = () => {
   const [gridSize] = useState(18);
   const [woodMaterial, setWoodMaterial] = useState<MeshStandardMaterial | null>(

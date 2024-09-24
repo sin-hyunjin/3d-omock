@@ -1,60 +1,21 @@
-import { useFrame, useThree } from "@react-three/fiber";
-import { useState } from "react";
-import { Mesh, Material } from "three";
+"use client";
+import { GridPointProps } from "@/types/omok.type";
 
-interface GridPointProps {
-  position: [number, number, number];
-  onClick: (position: [number, number, number]) => void;
-}
-
-export const OmokGridPoint = ({ position, onClick }: GridPointProps) => {
-  const { raycaster } = useThree();
-  const [ref, setRef] = useState<Mesh | null>(null);
-
-  useFrame(() => {
-    if (ref) {
-      // Raycaster를 사용하여 포인터의 위치를 추적
-      const intersects = raycaster.intersectObject(ref, true);
-      if (intersects.length > 0) {
-        if (ref.material instanceof Material) {
-          ref.material.opacity = 0.5;
-          ref.material.transparent = true;
-        } else if (Array.isArray(ref.material)) {
-          ref.material.forEach((material) => {
-            if (material instanceof Material) {
-              material.opacity = 0.5;
-              material.transparent = true;
-            }
-          });
-        }
-        document.body.style.cursor = "pointer";
-      } else {
-        if (ref.material instanceof Material) {
-          ref.material.opacity = 1;
-          ref.material.transparent = false;
-        } else if (Array.isArray(ref.material)) {
-          ref.material.forEach((material) => {
-            if (material instanceof Material) {
-              material.opacity = 1;
-              material.transparent = false;
-            }
-          });
-        }
-        document.body.style.cursor = "auto";
-      }
-    }
-  });
+/**
+ * 오목돌을 두기 위한 포인트 설정 컴포넌트
+ */
+export const OmokGridPoint = ({
+  position,
+  onClick,
+  onPointerOver,
+  onPointerOut,
+}: GridPointProps) => {
   return (
     <mesh
       position={position}
-      ref={(mesh) => setRef(mesh)}
       onClick={() => onClick(position)}
-      onPointerOver={() => {
-        document.body.style.cursor = "pointer";
-      }}
-      onPointerOut={() => {
-        document.body.style.cursor = "auto";
-      }}
+      onPointerEnter={onPointerOver} // 마우스 오버 시 위치 설정
+      onPointerLeave={onPointerOut} // 마우스 나갈 시 위치 초기화
     >
       <sphereGeometry args={[0.2, 8, 8]} />
       <meshBasicMaterial color={0x00} opacity={0} transparent />

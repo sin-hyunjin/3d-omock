@@ -2,11 +2,7 @@
 
 import { MeshStandardMaterial, TextureLoader } from "three";
 import { useEffect, useState } from "react";
-
-interface FloorProps {
-  position?: [number, number, number];
-  rotation?: [number, number, number];
-}
+import { FloorProps } from "@/types/omok.type";
 
 export const Floor = ({
   position = [0, 0, 0],
