@@ -2,10 +2,11 @@
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Floor, OmokBoard, GodicCabinetModel } from "./components";
+import { Floor, OmokBoard, OmokBox } from "./components";
 import { useState } from "react";
-
+import { Model } from "@/components/model";
 import { PerspectiveCamera } from "three";
+
 export default function Page() {
   // 카메라 위치와 시야각을 조정할 수 있도록 상태 관리
   const initialPosition: [number, number, number] = [0, 45, 30];
@@ -82,7 +83,26 @@ export default function Page() {
           shadow-camera-bottom={-10}
         />
         {/* 방향성 조명 */}
-        {/* 위치를 시각적으로 확인하기 위한 조명 표시 구체 */}
+
+        <OrbitControls
+          enableZoom={true} // 줌 허용
+          enablePan={true} // 팬 허용
+          maxPolarAngle={Math.PI / 2} // 카메라가 수직으로 90도까지만 회전하도록 제한
+          minPolarAngle={Math.PI / 14} // 카메라가 수직으로 45도까지 회전하도록 제한
+          maxAzimuthAngle={Math.PI / 2} // 카메라가 수평으로 90도까지만 회전하도록 제한
+          minAzimuthAngle={-Math.PI / 2} // 카메라가 수평으로 -90도까지 회전하도록 제한
+          maxDistance={80} // 카메라가 물체에서 멀어질 수 있는 최대 거리
+          minDistance={10} // 카메라가 물체에 가까워질 수 있는 최소 거리
+        />
+
+        {/* 장롱 모델 렌더링 */}
+        <Model
+          key="GothicCabinet"
+          url="/images/model/gothic-cabinet/GothicCabinet_01_4k.gltf"
+          scale={[13, 14, 8]}
+          position={[38, -5, -45]}
+        />
+        {/* 장롱 위치를 시각적으로 확인하기 위한 조명 표시 구체 */}
         <pointLight
           position={[40, 15, -30]}
           intensity={20}
@@ -94,21 +114,24 @@ export default function Page() {
           <sphereGeometry args={[0.5, 16, 16]} />
           <meshBasicMaterial color="red" />
         </mesh> */}
-        <OrbitControls
-          enableZoom={true} // 줌 허용
-          enablePan={true} // 팬 허용
-          maxPolarAngle={Math.PI / 2} // 카메라가 수직으로 90도까지만 회전하도록 제한
-          minPolarAngle={Math.PI / 14} // 카메라가 수직으로 45도까지 회전하도록 제한
-          maxAzimuthAngle={Math.PI / 2} // 카메라가 수평으로 90도까지만 회전하도록 제한
-          minAzimuthAngle={-Math.PI / 2} // 카메라가 수평으로 -90도까지 회전하도록 제한
+        {/* 바닥돌 모델 렌더링 */}
+        <Model
+          key="stone_fire"
+          url="/images/model/stone/stone_fire_pit_4k.gltf"
+          scale={[15, 8, 15]}
+          position={[38, -2, 40]}
         />
-        {/* GLTF 모델 렌더링 */}
-        <GodicCabinetModel url="/images/model/gothic-cabinet/GothicCabinet_01_4k.gltf" />
+
+        {/* 오목판 모델 */}
         <OmokBoard />
+        {/* 바둑알 및 바둑통 모델 */}
+        <OmokBox />
 
         {/* 바닥 추가 */}
         <Floor position={[0, -4.5, 0]} />
+        <Floor position={[0, 95.5, 0]} />
         <Floor position={[-49.7, 45.5, 0]} rotation={[Math.PI / 2, 0, 11]} />
+        <Floor position={[49.7, 45.5, 0]} rotation={[Math.PI / 2, 0, 11]} />
         <Floor position={[0, 45.5, -49.2]} rotation={[Math.PI / 2, 0, 0]} />
       </Canvas>
       {/* <Scene /> */}

@@ -1,6 +1,7 @@
 "use client";
 import { StoneProps } from "@/types/omok.type";
 
+// 바둑돌 컴포넌트
 export const OmokStone = ({
   color,
   position = [0, 0, 0],

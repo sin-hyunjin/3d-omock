@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { MeshStandardMaterial, TextureLoader } from "three";
 
+// 방석 컴포넌트
 export const OmokCushions = () => {
   const [cushionMaterial, setCushionMaterial] =
     useState<MeshStandardMaterial | null>(null);

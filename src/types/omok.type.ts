@@ -4,9 +4,11 @@ export interface FloorProps {
   rotation?: [number, number, number];
 }
 
-// 장롱 모델 URL 타입
-export interface GodicCabineModelProps {
+// 모델  타입
+export interface ModelProps {
   url: string;
+  scale?: [number, number, number];
+  position?: [number, number, number];
 }
 // 오목 그리드 선 타입
 export interface OmokGridHelperProps {

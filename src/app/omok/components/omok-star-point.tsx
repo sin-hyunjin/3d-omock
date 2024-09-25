@@ -1,4 +1,4 @@
-// 화점 그리기
+// 화점 표시를 위한 컴포넌트
 export const OmokStarPoints = () => {
   const starPoints: [number, number, number][] = [
     // 중앙 화점
