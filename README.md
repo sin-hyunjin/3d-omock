@@ -1,6 +1,6 @@
 # 3d-omock
 
-<video src="public/images/readme/omok-play.mov"></video>
+![omok-play](public/images/readme/omok-play.gif)
 
 ### 1. 오목판 모델링
 
