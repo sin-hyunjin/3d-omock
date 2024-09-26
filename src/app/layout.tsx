@@ -1,17 +1,6 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "@public/css/globals.css";
 
-const geistSans = localFont({
-  src: "../../public/fonts/GeistMonoVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "../../public/fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import "@public/css/globals.css";
 
 export const metadata: Metadata = {
   title: "Create 3D Omock APP",
@@ -25,11 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body className={` antialiased`}>{children}</body>
     </html>
   );
 }

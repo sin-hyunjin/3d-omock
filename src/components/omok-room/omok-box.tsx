@@ -3,13 +3,15 @@
 import { OrbitControls } from "@react-three/drei";
 import { OmokStone } from "./index";
 import { Model } from "@/components/model";
+import { Stone } from "@/types/omok.type";
+import { useEffect, useState } from "react";
 
 const generateRandomStonePositions = (
   numPositions: number,
   color: string,
   baseX: number,
   baseZ: number
-): Array<{ position: [number, number, number]; color: string }> => {
+): Stone[] => {
   const positions = [];
   for (let i = 0; i < numPositions; i++) {
     const x = baseX + Math.random() * 2; // 랜덤 x 위치
@@ -20,27 +22,26 @@ const generateRandomStonePositions = (
   return positions;
 };
 
-const renderStones = (
-  positions: Array<{ position: [number, number, number]; color: string }>
-) => {
-  return positions.map((stone, index) => (
-    <OmokStone
-      key={`stone-${index}`}
-      color={stone.color}
-      position={stone.position}
-    />
-  ));
-};
-
-// 바둑알통 모델 컴포넌트
 export const OmokBox = () => {
-  const blackStonePositions = generateRandomStonePositions(
-    50,
-    "white",
-    -15,
-    -10
-  );
-  const whiteStonePositions = generateRandomStonePositions(50, "black", 13, 8);
+  const [blackStonePositions, setBlackStonePositions] = useState<Stone[]>([]);
+  const [whiteStonePositions, setWhiteStonePositions] = useState<Stone[]>([]);
+
+  useEffect(() => {
+    const blackStones = generateRandomStonePositions(50, "white", -15, -10);
+    const whiteStones = generateRandomStonePositions(50, "black", 13, 8);
+    setBlackStonePositions(blackStones);
+    setWhiteStonePositions(whiteStones);
+  }, []); // 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 실행됨
+
+  const renderStones = (positions: Stone[]) => {
+    return positions.map((stone, index) => (
+      <OmokStone
+        key={`stone-${index}`}
+        color={stone.color}
+        position={stone.position}
+      />
+    ));
+  };
 
   return (
     <>

@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import { Box } from "@react-three/drei";
 import { MeshStandardMaterial, TextureLoader } from "three";
-import { OmokGridHelper, OmokCushions, OmokStarPoints } from "./index";
+import {
+  OmokGridHelper,
+  OmokCushions,
+  OmokStarPoints,
+  OmokLegs,
+} from "./index";
 
 /* 3D 오목판 컴포넌트 */
 export const OmokBoard = () => {
@@ -53,28 +58,7 @@ export const OmokBoard = () => {
       <OmokCushions />
 
       {/* 다리 4개 */}
-      <group>
-        {[
-          [gridSize / 2.1 + 0.3, -3, gridSize / 2],
-          [gridSize / 2.1 + 0.3, -3, -gridSize / 2],
-          [-gridSize / 2.1 - 0.3, -3, gridSize / 2],
-          [-gridSize / 2.1 - 0.3, -3, -gridSize / 2],
-        ].map((position, index) => (
-          <mesh
-            key={index}
-            position={position as [number, number, number]}
-            castShadow
-          >
-            <cylinderGeometry args={[0.7, 0.5, 2, 32]} />
-            <meshStandardMaterial color="#8B4513" />
-            {woodMaterial ? (
-              <primitive object={woodMaterial} attach="material" />
-            ) : (
-              <meshStandardMaterial color="grey" />
-            )}
-          </mesh>
-        ))}
-      </group>
+      <OmokLegs gridSize={gridSize} woodMaterial={woodMaterial} />
     </>
   );
 };

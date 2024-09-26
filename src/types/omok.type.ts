@@ -1,3 +1,13 @@
+// 카메라의 위치와 시야각 타입
+export interface CameraProps {
+  cameraPosition: [number, number, number];
+  cameraFov: number;
+}
+// OmokMainCanvas 컴포넌트의 props 타입
+export interface OmokCanvasProps {
+  cameraPosition: [number, number, number];
+  cameraFov: number;
+}
 // 바닥재 텍스쳐 타입
 export interface FloorProps {
   position?: [number, number, number];
@@ -24,7 +34,12 @@ export interface GridPointProps {
   onPointerOut?: () => void;
 }
 
-// 오목 돌 색깔과 위치 타입
+// 오목 돌 모델
+export interface Stone {
+  position: [number, number, number];
+  color: string;
+}
+// 오목 돌 색깔과 위치 및 오목돌을 두기전 투명화
 export interface StoneProps {
   color: string;
   position?: [number, number, number];
@@ -32,7 +47,9 @@ export interface StoneProps {
   opacity?: number;
 }
 
-export interface Stone {
-  position: [number, number, number];
-  color: string;
+export interface OmokStore {
+  stones: Stone[];
+  currentColor: string;
+  addStone: (stone: Stone) => void;
+  toggleColor: () => void;
 }

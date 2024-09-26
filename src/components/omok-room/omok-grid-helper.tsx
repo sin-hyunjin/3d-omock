@@ -2,17 +2,12 @@ import { useMemo, useState } from "react";
 import { GridHelper, Color } from "three";
 import { OmokGridPoint, OmokStone } from "./index";
 import { OmokGridHelperProps } from "@/types/omok.type";
-import { createGridPoints, checkWinCondition } from "../utils/omok-grid-uilts";
-
+import { createGridPoints, checkWinCondition } from "@/utils/omok-grid-uilts";
+import { useGameStateStore, useOmokStore } from "@/store/omok-store";
 /* 오목 그리드 선 컴포넌트 */
 export const OmokGridHelper = ({ size, spacing }: OmokGridHelperProps) => {
-  // 돌들의 위치와 색상을 저장하는 상태. 오목판에 놓여진 돌을 관리
-  const [stones, setStones] = useState<
-    { position: [number, number, number]; color: string }[]
-  >([]);
-
-  // 현재 놓을 돌의 색상을 관리하는 상태 (흰색 또는 검은색)
-  const [currentColor, setCurrentColor] = useState<string>("black");
+  const { stones, addStone } = useGameStateStore();
+  const { currentColor, toggleColor } = useOmokStore();
 
   // 추가: 현재 마우스 오버된 위치 상태
   const [hoveredPosition, setHoveredPosition] = useState<
@@ -52,26 +47,18 @@ export const OmokGridHelper = ({ size, spacing }: OmokGridHelperProps) => {
       return;
     }
 
-    const newStoneColor = currentColor;
     // 돌을 놓는 로직
-    setStones((prevStones) => {
-      // 현재 돌의 색상을 토글 (흰색이면 검은색, 검은색이면 흰색)
+    const newStone = {
+      position: [position[0], 4.1, position[2]] as [number, number, number],
+      color: currentColor,
+    };
 
-      const newStone = {
-        position: [position[0], 4.1, position[2]] as [number, number, number],
-        color: newStoneColor,
-      };
+    if (checkWinCondition([...stones, newStone], position, currentColor)) {
+      alert(`${currentColor}가 승리했습니다!`);
+    }
 
-      if (
-        checkWinCondition([...prevStones, newStone], position, newStoneColor)
-      ) {
-        alert(`${newStoneColor}가 승리했습니다!`);
-      }
-
-      return [...prevStones, newStone];
-    });
-
-    setCurrentColor(newStoneColor === "black" ? "white" : "black");
+    addStone(newStone);
+    toggleColor();
     setHoveredPosition(null); // 클릭 후 오버된 위치 초기화
   };
 

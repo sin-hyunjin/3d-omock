@@ -24,7 +24,7 @@ export const createGridPoints = (size: number, spacing: number) => {
  * 1. 현재 놓여 있는 돌(`stones` 배열)과 새로 놓인 돌의 `position` 및 `color`를 입력으로 받음
  * 2. 4가지 방향 (오른쪽, 아래쪽, 오른쪽 대각선, 왼쪽 대각선)으로 돌이 얼마나 연결되었는지 확인
  * 3. 각 방향에 대해 `countStonesInDirection` 함수로 돌이 얼마나 이어져 있는지 세고, 양쪽 방향으로 모두 확인
- * 4. 특정 방향에서 돌이 5개 이상 연결되면 승리 조건을 충족하므로 true를 반환
+ * 4. 특정 방향에서 돌이 정확히 5개 연결되면 승리 조건을 충족하므로 true를 반환
  * 5. 어느 방향에서도 5개의 돌이 연결되지 않았다면 false를 반환
  */
 export const checkWinCondition = (
@@ -40,14 +40,28 @@ export const checkWinCondition = (
   ];
 
   for (const [dx, dz] of directions) {
-    let count = 1;
+    // 현재 위치에서 한쪽 방향으로 체크
+    const countInDirection = countStonesInDirection(
+      stones,
+      position,
+      color,
+      dx,
+      dz
+    );
+    // 현재 위치에서 반대쪽 방향으로 체크
+    const countInOppositeDirection = countStonesInDirection(
+      stones,
+      position,
+      color,
+      -dx,
+      -dz
+    );
 
-    // 한쪽 방향으로 체크
-    count += countStonesInDirection(stones, position, color, dx, dz);
-    // 반대 방향으로 체크
-    count += countStonesInDirection(stones, position, color, -dx, -dz);
+    // 총 연결된 돌 개수는 현재 놓인 돌 포함
+    const totalCount = 1 + countInDirection + countInOppositeDirection;
 
-    if (count >= 5) return true; // 5개 돌이 연결됨
+    // 정확히 5개가 연결되었을 경우 승리 조건 충족
+    if (totalCount === 5) return true;
   }
   return false;
 };
