@@ -2,13 +2,14 @@
 
 import { OmokMainCanvas } from "@/components/omok-main-canvas";
 import { useRouter } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
   const router = useRouter();
 
   const enterRoom = () => {
-    const randomRoomId = Math.floor(Math.random() * 1000); // 임의의 roomId 생성
-    router.push(`/room/${randomRoomId}`);
+    const uniqueRoomId = uuidv4();
+    router.push(`/room/${uniqueRoomId}`);
   };
 
   return (

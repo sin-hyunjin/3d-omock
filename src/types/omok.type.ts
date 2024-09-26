@@ -52,4 +52,5 @@ export interface OmokStore {
   currentColor: string;
   addStone: (stone: Stone) => void;
   toggleColor: () => void;
+  resetColor: () => void;
 }

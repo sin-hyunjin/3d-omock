@@ -28,7 +28,6 @@ export const OmokMainCanvas = ({
 }: OmokCanvasProps) => {
   return (
     <Canvas
-      // 카메라의 기본 설정값 정의
       camera={{
         position: cameraPosition, // 카메라의 위치
         fov: cameraFov, // 카메라의 시야각
@@ -39,7 +38,7 @@ export const OmokMainCanvas = ({
     >
       <CameraController cameraPosition={cameraPosition} cameraFov={cameraFov} />
       {/* 주변광 및 방향성 조명 설정 */}
-      <ambientLight intensity={1} /> {/* 주변광 설정 */}
+      <ambientLight intensity={1} />
       <directionalLight
         position={[-12, 10, -1]} // 빛의 위치 설정
         intensity={1.5} // 빛의 강도
@@ -85,11 +84,11 @@ export const OmokMainCanvas = ({
       {/* 메인 바닥 */}
       <Floor position={[0, 95.5, 0]} />
       {/* 천장 바닥 */}
-      <Floor position={[-49.7, 45.5, 0]} rotation={[Math.PI / 2, 0, 11]} />{" "}
+      <Floor position={[-49.7, 45.5, 0]} rotation={[Math.PI / 2, 0, 11]} />
       {/* 왼쪽 벽 */}
-      <Floor position={[49.7, 45.5, 0]} rotation={[Math.PI / 2, 0, 11]} />{" "}
+      <Floor position={[49.7, 45.5, 0]} rotation={[Math.PI / 2, 0, 11]} />
       {/* 오른쪽 벽 */}
-      <Floor position={[0, 45.5, -49.2]} rotation={[Math.PI / 2, 0, 0]} />{" "}
+      <Floor position={[0, 45.5, -49.2]} rotation={[Math.PI / 2, 0, 0]} />
       {/* 뒤쪽 벽 */}
     </Canvas>
   );

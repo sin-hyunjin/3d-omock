@@ -7,26 +7,24 @@ import { OmokMainCanvas } from "@/components/omok-main-canvas";
 export default function Page() {
   const { resetStones } = useGameStateStore();
   // 카메라 위치와 시야각을 조정할 수 있도록 상태 관리
-  const initialPosition: [number, number, number] = [0, 45, 30];
+
   const [cameraPosition, setCameraPosition] = useState<
     [number, number, number]
-  >([0, 45, 30]);
-  const [cameraFov, setCameraFov] = useState<number>(50);
+  >([0, 40, 10]);
+  const [cameraFov, setCameraFov] = useState<number>(32);
 
   // 카메라 위치와 시야각을 변경하는 함수
   const changeCameraPosition = () => {
     console.log("게임시작");
-    setCameraPosition([0, 30, 10]); // 새로운 카메라 위치 설정
-    setCameraFov(40); // 새로운 시야각 설정
+    setCameraPosition([0, 40, 10]); // 새로운 카메라 위치 설정
+    setCameraFov(32); // 새로운 시야각 설정
   };
 
   // 카메라를 초기 상태로 복귀하는 함수
   const resetCameraPosition = () => {
     console.log("게임 초기화");
-
     resetStones(); // 게임리셋
-    setCameraPosition(initialPosition); // 초기 카메라 위치로 복귀
-    setCameraFov(50); // 초기 시야각으로 복귀
+    setCameraFov(32); // 초기 시야각으로 복귀
   };
 
   return (

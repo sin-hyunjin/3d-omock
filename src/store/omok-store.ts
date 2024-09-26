@@ -19,6 +19,9 @@ export const useOmokStore = create<OmokStore>((set) => ({
       currentColor: state.currentColor === "black" ? "white" : "black",
     }));
   },
+  resetColor: () => {
+    set({ currentColor: "black" });
+  },
 }));
 
 // 게임 상태관리
@@ -31,12 +34,13 @@ export const useGameStateStore = create<GameState>((set) => {
     addStone: (stone) =>
       set((state) => {
         const newStones = [...state.stones, stone];
-        localStorage.setItem("stones", JSON.stringify(newStones)); // 상태를 localStorage에 저장
+        localStorage.setItem("stones", JSON.stringify(newStones));
         return { stones: newStones };
       }),
     resetStones: () => {
-      localStorage.removeItem("stones"); // localStorage에서 상태 제거
+      localStorage.removeItem("stones");
       set({ stones: [] });
+      useOmokStore.getState().resetColor(); //
     },
   };
 });
