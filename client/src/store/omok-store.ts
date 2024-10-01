@@ -6,6 +6,7 @@ interface GameState {
   addStone: (stone: Stone) => void;
   resetStones: () => void;
 }
+
 export const useOmokStore = create<OmokStore>((set) => ({
   stones: [],
   currentColor: "black",
@@ -26,21 +27,28 @@ export const useOmokStore = create<OmokStore>((set) => ({
 
 // 게임 상태관리
 export const useGameStateStore = create<GameState>((set) => {
-  const savedStones = localStorage.getItem("stones");
-  const initialStones = savedStones ? JSON.parse(savedStones) : [];
+  const initialStones: Stone[] =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("stones") || "[]")
+      : [];
 
   return {
     stones: initialStones,
     addStone: (stone) =>
       set((state) => {
         const newStones = [...state.stones, stone];
-        localStorage.setItem("stones", JSON.stringify(newStones));
+        // 클라이언트 측에서만 localStorage에 저장
+        if (typeof window !== "undefined") {
+          localStorage.setItem("stones", JSON.stringify(newStones));
+        }
         return { stones: newStones };
       }),
     resetStones: () => {
-      localStorage.removeItem("stones");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("stones");
+      }
       set({ stones: [] });
-      useOmokStore.getState().resetColor(); //
+      useOmokStore.getState().resetColor();
     },
   };
 });
