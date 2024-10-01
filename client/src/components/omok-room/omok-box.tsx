@@ -48,13 +48,13 @@ export const OmokBox = () => {
       {/* 오목돌 보울 모델 렌더링 */}
       <Model
         key="woodenBowl1"
-        url="/images/model/wooden-bowl/wooden_bowl_01_4k.gltf"
+        url="/model/wooden-bowl/wooden_bowl_01_4k.gltf"
         scale={[15, 27, 15]}
         position={[-14, -4, -9]}
       />
       <Model
         key="woodenBowl2"
-        url="/images/model/wooden-bowl02/wooden_bowl_02_4k.gltf"
+        url="/model/wooden-bowl02/wooden_bowl_02_4k.gltf"
         scale={[15, 27, 15]}
         position={[14, -4, 9]}
       />

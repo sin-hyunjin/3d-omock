@@ -6,6 +6,7 @@ import { PerspectiveCamera } from "three";
 import { OmokBoard, OmokBox, Floor } from "@/components/omok-room";
 import { Model } from "./model";
 import { CameraProps, OmokCanvasProps } from "@/types/omok.type";
+import { usePathname } from "next/navigation";
 
 const CameraController = ({ cameraPosition, cameraFov }: CameraProps) => {
   const { camera } = useThree();
@@ -26,6 +27,8 @@ export const OmokMainCanvas = ({
   cameraPosition,
   cameraFov,
 }: OmokCanvasProps) => {
+  const pathname = usePathname();
+  console.log(pathname);
   return (
     <Canvas
       camera={{
@@ -36,7 +39,15 @@ export const OmokMainCanvas = ({
       }}
       shadows // 그림자 활성화
     >
-      <CameraController cameraPosition={cameraPosition} cameraFov={cameraFov} />
+      {pathname === "/" ? (
+        ""
+      ) : (
+        <CameraController
+          cameraPosition={cameraPosition}
+          cameraFov={cameraFov}
+        />
+      )}
+
       {/* 주변광 및 방향성 조명 설정 */}
       <ambientLight intensity={1} />
       <directionalLight
@@ -65,14 +76,14 @@ export const OmokMainCanvas = ({
       {/* GothicCabinet 3D 모델 */}
       <Model
         key="GothicCabinet"
-        url="/images/model/gothic-cabinet/GothicCabinet_01_4k.gltf"
+        url="/model/gothic-cabinet/GothicCabinet_01_4k.gltf"
         scale={[13, 14, 8]} // 모델 크기 설정
         position={[38, -5, -45]} // 모델 위치 설정
       />
       {/* stone_fire 3D 모델 */}
       <Model
         key="stone_fire"
-        url="/images/model/stone/stone_fire_pit_4k.gltf"
+        url="/model/stone/stone_fire_pit_4k.gltf"
         scale={[15, 8, 15]} // 모델 크기 설정
         position={[38, -2, 40]} // 모델 위치 설정
       />

@@ -1,28 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MeshStandardMaterial, TextureLoader } from "three";
+import useTextureLoader from "@/hooks/use-texture-loader";
 
 // 방석 컴포넌트
 export const OmokCushions = () => {
-  const [cushionMaterial, setCushionMaterial] =
-    useState<MeshStandardMaterial | null>(null);
-
-  useEffect(() => {
-    const loader = new TextureLoader();
-    const cushionTexturePath = "/images/jpg/smooth_concrete_floor_diff_4k.jpg";
-
-    loader.load(
-      cushionTexturePath,
-      (texture) => {
-        const material = new MeshStandardMaterial({ map: texture });
-        setCushionMaterial(material);
-      },
-      undefined,
-      (error) =>
-        console.error("방석 텍스처를 로드하는 동안 오류가 발생했습니다.", error)
-    );
-  }, []);
+  const texturePath = "/images/jpg/smooth_concrete_floor_diff_4k.jpg";
+  const cushionMaterial = useTextureLoader(texturePath);
 
   const cushionPositions: [number, number, number][] = [
     [0, -4, 16],
@@ -37,7 +20,7 @@ export const OmokCushions = () => {
           {cushionMaterial ? (
             <primitive object={cushionMaterial} attach="material" />
           ) : (
-            <meshStandardMaterial color="grey" />
+            <meshStandardMaterial color="#8F7660" />
           )}
         </mesh>
       ))}

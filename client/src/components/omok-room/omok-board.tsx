@@ -1,38 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box } from "@react-three/drei";
-import { MeshStandardMaterial, TextureLoader } from "three";
+
 import {
   OmokGridHelper,
   OmokCushions,
   OmokStarPoints,
   OmokLegs,
 } from "./index";
+import useTextureLoader from "@/hooks/use-texture-loader";
 
 /* 3D 오목판 컴포넌트 */
 export const OmokBoard = () => {
   const [gridSize] = useState(18);
-  const [woodMaterial, setWoodMaterial] = useState<MeshStandardMaterial | null>(
-    null
-  );
-
-  useEffect(() => {
-    const woodTextFloor =
-      "/images/jpg/wooden-flooring-textured-background-design.jpg";
-    const loader = new TextureLoader();
-
-    loader.load(
-      woodTextFloor,
-      (texture) => {
-        const material = new MeshStandardMaterial({ map: texture });
-        setWoodMaterial(material);
-      },
-      undefined,
-      (error) =>
-        console.error("텍스처를 로드하는 동안 오류가 발생했습니다.", error)
-    );
-  }, []);
+  const woodTexturePath =
+    "/images/jpg/wooden-flooring-textured-background-design.jpg";
+  const woodMaterial = useTextureLoader(woodTexturePath);
 
   return (
     <>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import "@public/css/globals.css";
+import { OmokMainCanvas } from "@/components/omok-main-canvas";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Create 3D Omock APP",
@@ -14,7 +16,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` antialiased`}>{children}</body>
+      <body className={`antialiased`}>
+        <Suspense fallback={"로딩중입니다."}>
+          <div className="h-screen flex justify-center items-center ">
+            {children}
+            <OmokMainCanvas cameraPosition={[0, 45, 30]} cameraFov={50} />
+          </div>
+        </Suspense>
+      </body>
     </html>
   );
 }
