@@ -1,5 +1,5 @@
 {
-  "name": "3d-omock",
+  "name": "3d-omock-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +14,8 @@
     "next": "14.2.10",
     "react": "^18",
     "react-dom": "^18",
+    "socket.io": "^4.8.0",
+    "socket.io-client": "^4.8.0",
     "three": "^0.168.0",
     "uuid": "^10.0.0",
     "zustand": "5.0.0-rc.2"
