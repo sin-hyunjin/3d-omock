@@ -8,14 +8,14 @@
 - **React Three Fiber**를 활용하여 오목판의 3D 환경을 구성.
 - 오목판은 **Wooden Texture**를 사용하여 나무질감을 표현
 
-![image-20240925123916165](../sin-hyunjin.github.io/images/README/omok-model.png)
+![image-20240925123916165](client/public/images/readme/omok-model.png)
 
 ### 2. 그리드의 꼭지점 메쉬를 생성 및 9개의 화점을 생성
 
 - 생성된 포인트들은 y 좌표가 3.805로 설정되어 있으며, 이 위치에 맞춰 배치
 - **화점**은 총 9개이며 반환되는 값은 [x, y, z] 형식의 좌표 배열
 
-![image-20240925124145126](../sin-hyunjin.github.io/images/README/omok-grid.png)
+![image-20240925124145126](client/public/images/readme/omok-grid.png)
 
 ### 3. 오목게임룰을 적용하기 위한 포인트 설정
 
@@ -23,18 +23,17 @@
 - 각 꼭지점마다 _오목판의 각 꼭지점 좌표를 생성하는 함수. 오목판의 크기와 간격에 따라 점들을 생성_
 - 돌 5개가 이어지면 게임이 끝나는 규칙이 적용
 
-![image-20240925124613146](../sin-hyunjin.github.io/images/README/omok-grid-point.png)
+![image-20240925124613146](client/public/images/readme/omok-grid-point.png)
 
 ## Todo
 
 - **승패 로직:** 게임 승리 조건을 어떻게 처리할지, 규칙에 따른 승패 로직을 구현해야함
 
   - **게임 진행 상태 관리:** 각 유저의 차례를 어떻게 구분할지, 턴이 끝났을 때 상태를 어떻게 유지할지 ?
-
     - 검은돌 3x3 가능 여부 등의 룰을 정확하게 체크해야함 (검은 돌은 3x3 가능, 백돌은 불가능)
     - ex) 오목돌을 두는 시간은 30초로 제한
     - 5돌시 게임승리 (6돌, 7돌등 5돌이상 x)
-
+  
 - **알림 기능:** 유저가 돌을 놓거나 상대가 돌을 놓았을 때, 실시간으로 알림을 받을 수 있는 기능이 필요함
 
 - **상태 저장 및 불러오기:** 게임을 중간에 저장하거나 종료 후 다시 불러올 수 있도록 하는 기능이 필요
