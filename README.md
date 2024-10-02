@@ -1,6 +1,6 @@
 # 3d-omock
 
-![omok-play](public/images/readme/omok-play.gif)
+![omok-play](client/public/images/readme/omok-play.gif)
 
 ### 1. 오목판 모델링
 
@@ -8,14 +8,14 @@
 - **React Three Fiber**를 활용하여 오목판의 3D 환경을 구성.
 - 오목판은 **Wooden Texture**를 사용하여 나무질감을 표현
 
-![image-20240925123916165](public/images/readme/omok-model.png)
+![image-20240925123916165](../sin-hyunjin.github.io/images/README/omok-model.png)
 
 ### 2. 그리드의 꼭지점 메쉬를 생성 및 9개의 화점을 생성
 
 - 생성된 포인트들은 y 좌표가 3.805로 설정되어 있으며, 이 위치에 맞춰 배치
 - **화점**은 총 9개이며 반환되는 값은 [x, y, z] 형식의 좌표 배열
 
-![image-20240925124145126](public/images/readme/omok-grid.png)
+![image-20240925124145126](../sin-hyunjin.github.io/images/README/omok-grid.png)
 
 ### 3. 오목게임룰을 적용하기 위한 포인트 설정
 
@@ -23,7 +23,7 @@
 - 각 꼭지점마다 _오목판의 각 꼭지점 좌표를 생성하는 함수. 오목판의 크기와 간격에 따라 점들을 생성_
 - 돌 5개가 이어지면 게임이 끝나는 규칙이 적용
 
-![image-20240925124613146](public/images/readme/omok-grid-point.png)
+![image-20240925124613146](../sin-hyunjin.github.io/images/README/omok-grid-point.png)
 
 ## Todo
 
